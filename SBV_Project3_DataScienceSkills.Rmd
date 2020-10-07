@@ -1,0 +1,178 @@
+---
+title: "Project 3 - Data Science Skills"
+author: "Stefano Biguzzi"
+date: "10/7/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(sjmisc)
+library(reshape2)
+library(DescTools)
+```
+
+```{r, results='hide',warning=FALSE}
+rm(list=ls())
+
+#Set working directory
+setwd("C:/Users/biguz/Desktop/CUNY Data Science/Fall2020/Data 607/Projects/Project 3")
+
+#Load skill list
+skills <- read_csv("./Project3_SkillsList.csv")
+
+#Uppercase the skills column
+skills$Skill.Name <- toupper(skills$Skill.Name)
+
+#Load data science job posts dataset 1
+DS.1 <- read_csv("./DataScientist.csv")
+DS.1 <- DS.1 %>%
+  select("Job Title","Company Name","Location","Job Description","Salary Estimate","Sector")
+
+#Load data science job posts dataset 2
+DS.2 <-
+  read_csv("./data_scientist_united_states_job_postings_jobspikr.csv")
+DS.2 <- DS.2 %>%
+  select(job_title,company_name,inferred_city,inferred_state,job_description,job_type,salary_offered,category)
+
+#Load data science job posts dataset 3
+DS.3 <- read.csv("./alldata.csv")
+DS.3 <- DS.3 %>%
+  select(-reviews)
+```
+
+```{r}
+#Modify DS.1 columns for appending
+names(DS.1) <- c("job_title","company_name","location","job_description","salary","sector")
+
+#Create necessary columns
+DS.1$city <- str_split(DS.1$location,", ",simplify = TRUE)[,1] #city
+DS.1$state <- str_split(DS.1$location,", ",simplify = TRUE)[,2] #state
+DS.1$company_name <- gsub("[\n].*","",DS.1$company_name)
+DS.1$job_type <- NA #job type
+DS.1$job_id <- paste0("DS.1_",1:nrow(DS.1)) #job id
+# DS.1$salary <- gsub("\\(([^\\)]+)\\)","",gsub(" ","",DS.1$salary)) #salary
+
+#Drop unused columns
+DS.1 <- DS.1 %>% select(-location)
+```
+
+```{r}
+#Rename DS.2 columns for appending
+names(DS.2) <- c("job_title","company_name","city","state","job_description","job_type","salary","sector")
+
+#Create necessary columns
+DS.2$job_id <- paste0("DS.2_",1:nrow(DS.2))
+```
+
+```{r}
+#Rename DS.3 columns for appending
+names(DS.3) <- c("job_title","company_name","job_description","location")
+
+#Create necessary columns
+DS.3$city <- str_split(DS.3$location,", ",simplify = TRUE)[,1] #city
+DS.3$state <- str_split(DS.3$location,", ",simplify = TRUE)[,2] #state
+DS.3$job_type <- NA #job type
+DS.3$salary <- NA #salary
+DS.3$sector <- NA #sector
+DS.3$job_id <- paste0("DS.3_",1:nrow(DS.3)) #job id
+
+#Drop unused columns
+DS.3 <- DS.3 %>% select(-location)
+```
+
+```{r}
+#Append data sets together into one large job description data frame
+final.DS.df <- rbind(rbind(DS.1,DS.2),DS.3)
+```
+
+```{r}
+#Uppercase job description column
+final.DS.df$job_description <- toupper(final.DS.df$job_description)
+
+#Remove leading and trailing whitespaces
+for(i in names(final.DS.df)){
+  final.DS.df[[i]] <- trimws(
+      final.DS.df[[i]],
+      which = c("both", "left", "right"),
+      whitespace = "[ \t\r\n]"
+    )  
+}
+rm(i)
+
+#Replace short words
+final.DS.df$job_description <- gsub("*\\b[[:alpha:]]{1,2}\\b *","", final.DS.df$job_description)
+
+#Replace punctuation and non alphanumeric symbols with a space
+final.DS.df$job_description <- gsub("[[:punct:]]|[^[:alnum:]]"," ", final.DS.df$job_description)
+```
+
+```{r}
+#Create simplified dataset
+DS.skills <- final.DS.df[,c("job_id","job_description")]
+
+#Initiate Skills column in simplified dataset
+DS.skills$Skills <- NA
+```
+
+```{r}
+start.time <- Sys.time()
+#Loop to populate skills column ~1.2min run time
+for (row in 1:nrow(DS.skills)){
+  skill.list <- list()
+  for (i in skills$Skill.Name){
+    if (str_contains(DS.skills$job_description[row],i)){
+      skill.list <- append(skill.list,i)
+      DS.skills$Skills[row] <- paste(skill.list,collapse = ", ")
+    }
+  }
+}
+rm(row,i)
+
+end.time <- Sys.time()
+time.taken <- end.time - start.time
+time.taken
+```
+
+```{r}
+#Create final data frame with list of skills and job_id
+final.DS.skills <- filter(DS.skills,(!is.na(Skills)))
+
+#split string on comma
+col.length <- max(sapply(strsplit(final.DS.skills$Skills, ", "),length)) #setting max columns
+final.DS.skills <-
+  data.frame(cbind(final.DS.skills$job_id,str_split_fixed(final.DS.skills$Skills, ", ",n=col.length))) #one col per skill
+names(final.DS.skills) <- c("job_id",paste0("skill",1:col.length)) #renaming columns
+
+#Replace blanks with NA
+final.DS.skills[final.DS.skills==""] <- NA
+
+#Converting data frame to long format
+final.DS.skills <- final.DS.skills %>% 
+  gather(SkillNum, Skill, skill1:paste0("skill",col.length)) %>% 
+  filter(!(is.na(Skill))) %>%
+  select(-SkillNum)
+
+#Reordering data frame and resetting index
+final.DS.skills <- final.DS.skills[order(final.DS.skills$job_id),]
+rownames(final.DS.skills) <- NULL
+
+rm(col.length)
+```
+
+```{r}
+analysis.df <- merge(final.DS.skills,final.DS.df[,c("job_id","salary","state")],by="job_id")
+```
+
+```{r}
+final.DS.skills %>%
+  count(Skill, sort = TRUE) %>%
+  top_n(50)
+```
+
