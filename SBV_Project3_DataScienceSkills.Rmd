@@ -20,45 +20,120 @@ library(DescTools)
 library(httr)
 library(tm)
 library(ngram)
+library(RMariaDB)
 ```
+
+```{r}
+#Create connection to database
+con <- dbConnect(RMariaDB::MariaDB(),
+                 dbname = 'datascienceskills',
+                 user = "group", 
+                 password = "datascience123", 
+                 host = '34.123.100.43')
+```
+```{r}
+#Create tables in database
+dbSendQuery(con, "
+ CREATE TABLE IF NOT EXISTS datascienceskills.skills (
+ skill_id INT NOT NULL AUTO_INCREMENT,
+ skill CHAR(100),
+ type CHAR(100),
+ count INT,
+ PRIMARY KEY (skill_id)
+ );
+ ")
+
+dbSendQuery(con, "
+ CREATE TABLE IF NOT EXISTS datascienceskills.jobs1 (
+ job_id INT NOT NULL AUTO_INCREMENT,
+ job_title CHAR(100),
+ salary_estimate CHAR(100),
+ job_description CHAR(100),
+ rating INT,
+ company_name CHAR(100),
+ location CHAR(100),
+ headquarters CHAR(100),
+ size CHAR(100),
+ PRIMARY KEY (job_id)
+ );
+ ")
+
+dbSendQuery(con, "
+ CREATE TABLE IF NOT EXISTS datascienceskills.jobs2 (
+ job_id INT NOT NULL AUTO_INCREMENT,
+ position CHAR(100),
+ company CHAR(100),
+ description CHAR(100),
+ reviews INT,
+ location CHAR(100),
+ PRIMARY KEY (job_id)
+ );
+ ")
+
+dbSendQuery(con, "
+ CREATE TABLE IF NOT EXISTS datascienceskills.jobs3 (
+ job_id INT NOT NULL AUTO_INCREMENT,
+ time_stamp CHAR(100),
+ url CHAR(100),
+ job_title CHAR(100),
+ category CHAR(100),
+ company_name CHAR(100),
+ city CHAR(100),
+ state CHAR(100),
+ country CHAR(100),
+ inferred_city CHAR(100),
+ inferred_state CHAR(100),
+ PRIMARY KEY (job_id)
+ );
+ ")
+```
+```{r}
+#data frames of skills and jobs
+jobs1_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs1.csv"))
+jobs2_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs2.csv"))
+jobs3_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs3.csv"))
+
+#Write to tables in database
+
+dbWriteTable(con, name = "datascienceskills.jobs1", value = jobs1_df, append = TRUE)
+dbWriteTable(con, name = "datascienceskills.jobs2", value = jobs2_df, append = TRUE)
+dbWriteTable(con, name = "datascienceskills.jobs3", value = jobs3_df, append = TRUE)
+```
+
 
 ```{r, results='hide',warning=FALSE}
 rm(list=ls())
-
 start.time <- Sys.time()
 #Set working directory
-setwd("C:/Users/biguz/Desktop/CUNY Data Science/Fall2020/Data 607/Projects/Project 3")
-
+# setwd("C:/Users/biguz/Desktop/CUNY Data Science/Fall2020/Data 607/Projects/Project 3")
+#Create connection to database
+con <- dbConnect(RMariaDB::MariaDB(),
+                 dbname = 'datascienceskills',
+                 user = "group", 
+                 password = "datascience123", 
+                 host = '34.123.100.43')
 #Load skill list
-skill.data <-
-  getURL("https://raw.githubusercontent.com/sbiguzzi/data607project3/main/Project3_SkillsList.csv")
-skills <- read.csv(text = skill.data)
+skills <- dbReadTable(conn = con, "skills")
 names(skills) <- c("Skill.Name","Skill.Type")
-
 #Uppercase the skills column
 skills$Skill.Name <- toupper(skills$Skill.Name)
-
-#Load data science job posts dataset 1
-DS.1 <- read_csv(url("https://raw.githubusercontent.com/picklesueat/data_jobs_data/master/DataScientist.csv"))
+#Load data science job posts data set 1
+DS.1 <- dbReadTable(conn = con, "jobs1")
 DS.1 <- DS.1 %>%
-  select("Job Title","Company Name","Location","Job Description","Salary Estimate","Sector")
-
-#Load data science job posts dataset 2
-DS.2 <-
-  read_csv("./data_scientist_united_states_job_postings_jobspikr.csv")
+  select("Job.Title","Company Name","Location","Job Description","Salary Estimate","Sector")
+#Load data science job posts data set 2
+DS.2 <- dbReadTable(conn = con, "jobs2")
 DS.2 <- DS.2 %>%
-  select(job_title,company_name,inferred_city,inferred_state,job_description,job_type,salary_offered,category)
-
+  select(position,company_name,inferred_city,inferred_state,job_description,job_type,salary_offered,category)
 #Load data science job posts dataset 3
-DS.3 <- read.csv("./alldata.csv")
-DS.3 <- DS.3 %>%
-  select(-reviews)
+DS.3 <- dbReadTable(conn = con, "jobs3")
+# DS.3 <- DS.3 %>%
+#   select(-reviews)
 ```
 
 ```{r}
 #Modify DS.1 columns for appending
 names(DS.1) <- c("job_title","company_name","location","job_description","salary","sector")
-
 #Create necessary columns
 DS.1$city <- str_split(DS.1$location,", ",simplify = TRUE)[,1] #city
 DS.1$state <- str_split(DS.1$location,", ",simplify = TRUE)[,2] #state
@@ -66,16 +141,12 @@ DS.1$company_name <- gsub("[\n].*","",DS.1$company_name)
 DS.1$job_type <- NA #job type
 DS.1$job_id <- paste0("DS.1_",1:nrow(DS.1)) #job id
 DS.1$salary <- gsub("\\(([^\\)]+)\\)","",gsub(" ","",DS.1$salary)) #salary
-
 DS.1$salary <-
   with(DS.1, replace(salary, salary == "$10-$26PerHour", "$20K-$54K"))
-
 DS.1$salary <-
   with(DS.1, replace(salary, salary == "$17-$27PerHour", "$35K-$56K"))
-
 DS.1$salary <-
   with(DS.1, replace(salary, salary == "$34-$53PerHour", "$70K-$110"))
-
 #Drop unused columns
 DS.1 <- DS.1 %>% select(-location)
 ```
@@ -83,7 +154,6 @@ DS.1 <- DS.1 %>% select(-location)
 ```{r}
 #Rename DS.2 columns for appending
 names(DS.2) <- c("job_title","company_name","city","state","job_description","job_type","salary","sector")
-
 #Create necessary columns
 DS.2$job_id <- paste0("DS.2_",1:nrow(DS.2))
 ```
@@ -91,7 +161,6 @@ DS.2$job_id <- paste0("DS.2_",1:nrow(DS.2))
 ```{r}
 #Rename DS.3 columns for appending
 names(DS.3) <- c("job_title","company_name","job_description","location")
-
 #Create necessary columns
 DS.3$city <- str_split(DS.3$location,", ",simplify = TRUE)[,1] #city
 DS.3$state <- str_split(DS.3$location,", ",simplify = TRUE)[,2] #state
@@ -99,7 +168,6 @@ DS.3$job_type <- NA #job type
 DS.3$salary <- NA #salary
 DS.3$sector <- NA #sector
 DS.3$job_id <- paste0("DS.3_",1:nrow(DS.3)) #job id
-
 #Drop unused columns
 DS.3 <- DS.3 %>% select(-location)
 ```
@@ -107,7 +175,6 @@ DS.3 <- DS.3 %>% select(-location)
 ```{r}
 #Append data sets together into one large job description data frame
 final.DS.df <- rbind(rbind(DS.1,DS.2),DS.3)
-
 #Remove leading and trailing whitespaces
 for(i in names(final.DS.df)){
   final.DS.df[[i]] <- trimws(
@@ -133,24 +200,18 @@ clean.string <- function(x){
   x <-stripWhitespace(x)
   x <- removeNumbers(x)
   return(x)}
-
 #Replace job_description with cleaned version
 final.DS.df$job_description <-
   clean.string(final.DS.df$job_description)
-
 # Replace punctuation and non alphabet characters
 final.DS.df$job_description <- gsub("[[:punct:]]|[^[:alnum:]]"," ", final.DS.df$job_description)
-
 #Replace short words
 final.DS.df$job_description <- gsub("*\\b[[:alpha:]]{1,2}\\b *"," ", final.DS.df$job_description)
-
 #Replace any word that look like websites
 final.DS.df$job_description <- gsub("(f|ht)tp(s?)\\w+"," ", final.DS.df$job_description)
 final.DS.df$job_description <- gsub("(www)\\w+"," ", final.DS.df$job_description)
-
 # Trim white space again
 final.DS.df$job_description <- trimws(final.DS.df$job_description,which='both',whitespace="[ ]")
-
 #Remove extra white space between words
 final.DS.df$job_description <-
   gsub("\\s+"," ",final.DS.df$job_description)
@@ -163,9 +224,7 @@ skill.list <- final.DS.df %>%
   unnest(cols = c(words)) %>%
   count(words, sort = TRUE) %>%
   filter(n>10)
-
 write.csv(skill.list,"./skill_word_count.csv", row.names = FALSE)
-
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 time.taken
@@ -182,7 +241,6 @@ time.taken
 
 
 ```{r}
-
 #Loop to populate skills column ~1.2min run time
 for (row in 1:nrow(DS.skills)){
   skill.list <- list()
@@ -199,37 +257,29 @@ rm(row,i)
 ```{r}
 #Create final data frame with list of skills and job_id
 final.DS.skills <- filter(DS.skills,(!is.na(Skills)))
-
 #split string on comma
 col.length <- max(sapply(strsplit(final.DS.skills$Skills, ", "),length)) #setting max columns
 final.DS.skills <-
   data.frame(cbind(final.DS.skills$job_id,str_split_fixed(final.DS.skills$Skills, ", ",n=col.length))) #one col per skill
 names(final.DS.skills) <- c("job_id",paste0("skill",1:col.length)) #renaming columns
-
 #Replace blanks with NA
 final.DS.skills[final.DS.skills==""] <- NA
-
 #Converting data frame to long format
 final.DS.skills <- final.DS.skills %>% 
   gather(SkillNum, Skill, skill1:paste0("skill",col.length)) %>% 
   filter(!(is.na(Skill))) %>%
   select(-SkillNum)
-
 #Reordering data frame and resetting index
 final.DS.skills <- final.DS.skills[order(final.DS.skills$job_id),]
 rownames(final.DS.skills) <- NULL
-
 rm(col.length)
 ```
 
 ```{r}
 final.DS.skills <- merge(final.DS.skills,final.DS.df[,c("job_id","salary","state")],by="job_id")
-
-
 ```
 #
 # ```{r}
 # filter(analysis.df,(!(is.na(salary)))) %>%
 #   count(salary,Skill, sort = TRUE)
 # ```
-
