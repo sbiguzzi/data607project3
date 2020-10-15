@@ -89,15 +89,17 @@ dbSendQuery(con, "
 ```
 ```{r}
 #data frames of skills and jobs
-jobs1_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs1.csv"))
-jobs2_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs2.csv"))
-jobs3_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs3.csv"))
+# jobs1_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs1.csv"))
+# jobs2_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs2.csv"))
+# jobs3_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs3.csv"))
+#skills_df <- read.csv(url("https://raw.githubusercontent.com/sbiguzzi/data607project3/main/skill_word_count.csv"))
 
 #Write to tables in database
 
-dbWriteTable(con, name = "datascienceskills.jobs1", value = jobs1_df, append = TRUE)
-dbWriteTable(con, name = "datascienceskills.jobs2", value = jobs2_df, append = TRUE)
-dbWriteTable(con, name = "datascienceskills.jobs3", value = jobs3_df, append = TRUE)
+# dbWriteTable(con, name = "datascienceskills.jobs1", value = jobs1_df, append = TRUE)
+# dbWriteTable(con, name = "datascienceskills.jobs2", value = jobs2_df, append = TRUE)
+# dbWriteTable(con, name = "datascienceskills.jobs3", value = jobs3_df, append = TRUE)
+#dbWriteTable(con, name = "datascienceskills.skills", value = skills_df, append = TRUE)
 ```
 
 
