@@ -1,0 +1,117 @@
+﻿Team Member,words,skill,"category (hard,soft,tool)",n
+aa,A/B Testing,abtesting,hard,1
+aa,Account Management,accountmanagement,soft,1
+aa,Apache,apache,tool,1
+aa,Architectures,architectures,hard,1
+aa,Attention to Detail,attentiontodetail,soft,1
+aa,Automation,automation,hard,1
+aa,Azure,azure,tool,1
+aa,Blockchain,blockchain,hard,1
+aa,Business Analytics,businessanalytics,hard,1
+aa,Business Development,businessdevelopment,soft,1
+aa,Cloud Computing,cloudcomputing,hard,1
+aa,Clustering,clustering,hard,1
+aa,Collaboration,collaboration,soft,1
+aa,Communication,communication,soft,1
+aa,Consumer Management,consumermanagement,soft,1
+aa,Consumer Relations,consumerrelations,soft,1
+aa,Content Development,contentdevelopment,hard,1
+aa,Content Publishing,contentpublishing,hard,1
+aa,Contract Management,contractmanagement,hard,1
+aa,Creative,creative,soft,1
+aa,Critical Thinking,criticalthinking,soft,1
+aa,Curious,curious,soft,1
+aa,Customer Support,customersupport,soft,1
+aa,Dashboards,dashboards,hard,1
+aa,Data Acquisition,dataacquisition,hard,1
+aa,Data Engineering,dataengineering,hard,1
+aa,Data Excellence,dataexcellence,hard,1
+aa,Data Integrity,dataintegrity,hard,1
+aa,Data Management,datamanagement,hard,1
+aa,Data Mining,datamining,hard,1
+aa,Data Query,dataquery,hard,1
+aa,Data Structure,datastructure,hard,1
+aa,Data Transformation,datatransform,hard,1
+aa,Data Validation,datavalidation,hard,1
+aa,Data Visualization,datavisualization,hard,1
+aa,Data Warehouse,datawarehouse,hard,1
+aa,Decision Making,decisionmaking,soft,1
+aa,Deep Learning,deeplearning,hard,1
+aa,Deployment,deployment,tool,1
+aa,Desire to Learn,desiretolearnnewtechnology,soft,1
+aa,Different Audiences,differentaudiences,soft,1
+aa,Documentation,documentation,soft,1
+aa,Edge Computing,edgecomputing,hard,1
+aa,Entrepreneurial,entrepreneurial,soft,1
+aa,Error Detection,errordetection,hard,1
+aa,Exploratory Data Analysis,exploratorydataanalysis,hard,1
+aa,Finding Patterns,findingpatterns,hard,1
+aa,Forecasting,forecasting,hard,1
+aa,Frameworks,framework,tool,1
+aa,Full-Stack,fullstack,hard,1
+aa,Genetics,genetics,hard,1
+aa,Git,git,tool,1
+aa,High Energy,highenergy,soft,1
+aa,IBM,ibm,tool,1
+aa,Identifying Error,identifyingerror,hard,1
+aa,Influence Others,influenceothers,soft,1
+aa,Innovative,innovative,soft,1
+aa,Interpersonal,interpersonal,soft,1
+aa,JAVA,java,tool,1
+aa,Kafka,kafka,tool,1
+aa,Language,language,tool,1
+aa,Machine Learning,machinelearning,hard,1
+aa,Maintaining Database,maintainingdatabase,hard,1
+aa,Manipulate Data,manipulatedata,hard,1
+aa,Microsoft Excel,excel,tool,1
+aa,Microsoft Office Suite,microsoftofficesuite,tool,1
+aa,Microsoft Power Point,powerpoint,tool,1
+aa,Microsoft Word,microsoftword,tool,1
+aa,Multi-Media,multimedia,hard,1
+aa,Multiple Audiences,multipleaudiences,soft,1
+aa,Neural Network,neuralnetwork,hard,1
+aa,Operations Research,operationsresearch,hard,1
+aa,Oracle Database,oracledatabase,hard,1
+aa,Pandas,pandas,tool,1
+aa,Personal Integrity,personalintegrity,soft,1
+aa,Predict Behavior,predictbehavior,hard,1
+aa,Predictive Modeling,predictivemodeling,hard,1
+aa,Prepare Data,preparedata,hard,1
+aa,Proactive,proactive,soft,1
+aa,Problem Solving,problemsolving,soft,1
+aa,Process Improvement,processimprovement,soft,1
+aa,Product Management,productmanagement,soft,1
+aa,Python,python,tool,1
+aa,QA Testing,qatesting,hard,1
+aa,Read Data,readdata,hard,1
+aa,Regression Analysis,regressionanalysis,hard,1
+aa,Regular Expression,regularexpression,hard,1
+aa,Regulatory Environment,regulatoryenvironment,hard,1
+aa,Relational Database,relationaldatabase,tool,1
+aa,Report Development,reportdevelopment,hard,1
+aa,Report Writing,reportwriting,hard,1
+aa,Research,research,hard,1
+aa,R Packages,rpackages,tool,1
+aa,SAS,sas,tool,1
+aa,scikit-learn,scikitlearn,tool,1
+aa,Scripting,scripting,tool,1
+aa,Search Engine,searchengine,tool,1
+aa,Self-Starter,selfstarter,soft,1
+aa,Software Deployment,softwaredeployment,hard,1
+aa,Software Development,softwaredevelopment,hard,1
+aa,Software Environments,softwareenvironments,tool,1
+aa,SPSS,spss,tool,1
+aa,SQL,sql,tool,1
+aa,Supervised Learning,supervisedlearning,hard,1
+aa,Tableau,tableau,tool,1
+aa,Teamwork,teamwork,soft,1
+aa,Tech Support,techsupport,soft,1
+aa,TensorFlow,tensorflow,tool,1
+aa,Decision Tree,trees,tool,1
+aa,Trend Analysis,trendanalysis,hard,1
+aa,Unsupervised Learning,unsupervisedlearning,hard,1
+aa,Verbal Communication,verbalcommunication,soft,1
+aa,Visualization,visualization,hard,1
+aa,Write Code,writecode,hard,1
+aa,Write Policies,writepolicies,hard,1
+aa,Written Communication,writtencommunication,soft,1
