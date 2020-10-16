@@ -1,117 +1,117 @@
-skill,type,skillname
-abtesting,hard,A/B Testing
-accountmanagement,soft,Account Management
-apache,tool,Apache
-architectures,hard,Architectures
-attentiontodetail,soft,Attention to Detail
-automation,hard,Automation
-azure,tool,Azure
-blockchain,hard,Blockchain
-businessanalytics,hard,Business Analytics
-businessdevelopment,soft,Business Development
-cloudcomputing,hard,Cloud Computing
-clustering,hard,Clustering
-collaboration,soft,Collaboration
-communication,soft,Communication
-consumermanagement,soft,Consumer Management
-consumerrelations,soft,Consumer Relations
-contentdevelopment,hard,Content Development
-contentpublishing,hard,Content Publishing
-contractmanagement,hard,Contract Management
-creative,soft,Creative
-criticalthinking,soft,Critical Thinking
-curious,soft,Curious
-customersupport,soft,Customer Support
-dashboards,hard,Dashboards
-dataacquisition,hard,Data Acquisition
-dataengineering,hard,Data Engineering
-dataexcellence,hard,Data Excellence
-dataintegrity,hard,Data Integrity
-datamanagement,hard,Data Management
-datamining,hard,Data Mining
-dataquery,hard,Data Query
-datastructure,hard,Data Structure
-datatransform,hard,Data Transformation
-datavalidation,hard,Data Validation
-datavisualization,hard,Data Visualization
-datawarehouse,hard,Data Warehouse
-decisionmaking,soft,Decision Making
-deeplearning,hard,Deep Learning
-deployment,tool,Deployment
-desiretolearnnewtechnology,soft,Desire to Learn
-differentaudiences,soft,Different Audiences
-documentation,soft,Documentation
-edgecomputing,hard,Edge Computing
-entrepreneurial,soft,Entrepreneurial
-errordetection,hard,Error Detection
-exploratorydataanalysis,hard,Exploratory Data Analysis
-findingpatterns,hard,Finding Patterns
-forecasting,hard,Forecasting
-framework,tool,Frameworks
-fullstack,hard,Full-Stack
-genetics,hard,Genetics
-git,tool,Git
-highenergy,soft,High Energy
-ibm,tool,IBM
-identifyingerror,hard,Identifying Error
-influenceothers,soft,Influence Others
-innovative,soft,Innovative
-interpersonal,soft,Interpersonal
-java,tool,JAVA
-kafka,tool,Kafka
-language,tool,Language
-machinelearning,hard,Machine Learning
-maintainingdatabase,hard,Maintaining Database
-manipulatedata,hard,Manipulate Data
-excel,tool,Microsoft Excel
-microsoftofficesuite,tool,Microsoft Office Suite
-powerpoint,tool,Microsoft Power Point
-microsoftword,tool,Microsoft Word
-multimedia,hard,Multi-Media
-multipleaudiences,soft,Multiple Audiences
-neuralnetwork,hard,Neural Network
-operationsresearch,hard,Operations Research
-oracledatabase,hard,Oracle Database
-pandas,tool,Pandas
-personalintegrity,soft,Personal Integrity
-predictbehavior,hard,Predict Behavior
-predictivemodeling,hard,Predictive Modeling
-preparedata,hard,Prepare Data
-proactive,soft,Proactive
-problemsolving,soft,Problem Solving
-processimprovement,soft,Process Improvement
-productmanagement,soft,Product Management
-python,tool,Python
-qatesting,hard,QA Testing
-readdata,hard,Read Data
-regressionanalysis,hard,Regression Analysis
-regularexpression,hard,Regular Expression
-regulatoryenvironment,hard,Regulatory Environment
-relationaldatabase,tool,Relational Database
-reportdevelopment,hard,Report Development
-reportwriting,hard,Report Writing
-research,hard,Research
-rpackages,tool,R Packages
-sas,tool,SAS
-scikitlearn,tool,scikit-learn
-scripting,tool,Scripting
-searchengine,tool,Search Engine
-selfstarter,soft,Self-Starter
-softwaredeployment,hard,Software Deployment
-softwaredevelopment,hard,Software Development
-softwareenvironments,tool,Software Environments
-spss,tool,SPSS
-sql,tool,SQL
-supervisedlearning,hard,Supervised Learning
-tableau,tool,Tableau
-teamwork,soft,Teamwork
-techsupport,soft,Tech Support
-tensorflow,tool,TensorFlow
-trees,tool,Decision Tree
-trendanalysis,hard,Trend Analysis
-unsupervisedlearning,hard,Unsupervised Learning
-verbalcommunication,soft,Verbal Communication
-visualization,hard,Visualization
-writecode,hard,Write Code
-writepolicies,hard,Write Policies
-writtencommunication,soft,Written Communication
+skill_id,skill,type,skillname,count
+,abtesting,hard,A/B Testing,
+,accountmanagement,soft,Account Management,
+,apache,tool,Apache,
+,architectures,hard,Architectures,
+,attentiontodetail,soft,Attention to Detail,
+,automation,hard,Automation,
+,azure,tool,Azure,
+,blockchain,hard,Blockchain,
+,businessanalytics,hard,Business Analytics,
+,businessdevelopment,soft,Business Development,
+,cloudcomputing,hard,Cloud Computing,
+,clustering,hard,Clustering,
+,collaboration,soft,Collaboration,
+,communication,soft,Communication,
+,consumermanagement,soft,Consumer Management,
+,consumerrelations,soft,Consumer Relations,
+,contentdevelopment,hard,Content Development,
+,contentpublishing,hard,Content Publishing,
+,contractmanagement,hard,Contract Management,
+,creative,soft,Creative,
+,criticalthinking,soft,Critical Thinking,
+,curious,soft,Curious,
+,customersupport,soft,Customer Support,
+,dashboards,hard,Dashboards,
+,dataacquisition,hard,Data Acquisition,
+,dataengineering,hard,Data Engineering,
+,dataexcellence,hard,Data Excellence,
+,dataintegrity,hard,Data Integrity,
+,datamanagement,hard,Data Management,
+,datamining,hard,Data Mining,
+,dataquery,hard,Data Query,
+,datastructure,hard,Data Structure,
+,datatransform,hard,Data Transformation,
+,datavalidation,hard,Data Validation,
+,datavisualization,hard,Data Visualization,
+,datawarehouse,hard,Data Warehouse,
+,decisionmaking,soft,Decision Making,
+,deeplearning,hard,Deep Learning,
+,deployment,tool,Deployment,
+,desiretolearnnewtechnology,soft,Desire to Learn,
+,differentaudiences,soft,Different Audiences,
+,documentation,soft,Documentation,
+,edgecomputing,hard,Edge Computing,
+,entrepreneurial,soft,Entrepreneurial,
+,errordetection,hard,Error Detection,
+,exploratorydataanalysis,hard,Exploratory Data Analysis,
+,findingpatterns,hard,Finding Patterns,
+,forecasting,hard,Forecasting,
+,framework,tool,Frameworks,
+,fullstack,hard,Full-Stack,
+,genetics,hard,Genetics,
+,git,tool,Git,
+,highenergy,soft,High Energy,
+,ibm,tool,IBM,
+,identifyingerror,hard,Identifying Error,
+,influenceothers,soft,Influence Others,
+,innovative,soft,Innovative,
+,interpersonal,soft,Interpersonal,
+,java,tool,JAVA,
+,kafka,tool,Kafka,
+,language,tool,Language,
+,machinelearning,hard,Machine Learning,
+,maintainingdatabase,hard,Maintaining Database,
+,manipulatedata,hard,Manipulate Data,
+,excel,tool,Microsoft Excel,
+,microsoftofficesuite,tool,Microsoft Office Suite,
+,powerpoint,tool,Microsoft Power Point,
+,microsoftword,tool,Microsoft Word,
+,multimedia,hard,Multi-Media,
+,multipleaudiences,soft,Multiple Audiences,
+,neuralnetwork,hard,Neural Network,
+,operationsresearch,hard,Operations Research,
+,oracledatabase,hard,Oracle Database,
+,pandas,tool,Pandas,
+,personalintegrity,soft,Personal Integrity,
+,predictbehavior,hard,Predict Behavior,
+,predictivemodeling,hard,Predictive Modeling,
+,preparedata,hard,Prepare Data,
+,proactive,soft,Proactive,
+,problemsolving,soft,Problem Solving,
+,processimprovement,soft,Process Improvement,
+,productmanagement,soft,Product Management,
+,python,tool,Python,
+,qatesting,hard,QA Testing,
+,readdata,hard,Read Data,
+,regressionanalysis,hard,Regression Analysis,
+,regularexpression,hard,Regular Expression,
+,regulatoryenvironment,hard,Regulatory Environment,
+,relationaldatabase,tool,Relational Database,
+,reportdevelopment,hard,Report Development,
+,reportwriting,hard,Report Writing,
+,research,hard,Research,
+,rpackages,tool,R Packages,
+,sas,tool,SAS,
+,scikitlearn,tool,scikit-learn,
+,scripting,tool,Scripting,
+,searchengine,tool,Search Engine,
+,selfstarter,soft,Self-Starter,
+,softwaredeployment,hard,Software Deployment,
+,softwaredevelopment,hard,Software Development,
+,softwareenvironments,tool,Software Environments,
+,spss,tool,SPSS,
+,sql,tool,SQL,
+,supervisedlearning,hard,Supervised Learning,
+,tableau,tool,Tableau,
+,teamwork,soft,Teamwork,
+,techsupport,soft,Tech Support,
+,tensorflow,tool,TensorFlow,
+,trees,tool,Decision Tree,
+,trendanalysis,hard,Trend Analysis,
+,unsupervisedlearning,hard,Unsupervised Learning,
+,verbalcommunication,soft,Verbal Communication,
+,visualization,hard,Visualization,
+,writecode,hard,Write Code,
+,writepolicies,hard,Write Policies,
+,writtencommunication,soft,Written Communication,
