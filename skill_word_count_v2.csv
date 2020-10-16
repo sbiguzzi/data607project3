@@ -1,117 +1,117 @@
-words,skill,"category (hard,soft,tool)"
-A/B Testing,abtesting,hard
-Account Management,accountmanagement,soft
-Apache,apache,tool
-Architectures,architectures,hard
-Attention to Detail,attentiontodetail,soft
-Automation,automation,hard
-Azure,azure,tool
-Blockchain,blockchain,hard
-Business Analytics,businessanalytics,hard
-Business Development,businessdevelopment,soft
-Cloud Computing,cloudcomputing,hard
-Clustering,clustering,hard
-Collaboration,collaboration,soft
-Communication,communication,soft
-Consumer Management,consumermanagement,soft
-Consumer Relations,consumerrelations,soft
-Content Development,contentdevelopment,hard
-Content Publishing,contentpublishing,hard
-Contract Management,contractmanagement,hard
-Creative,creative,soft
-Critical Thinking,criticalthinking,soft
-Curious,curious,soft
-Customer Support,customersupport,soft
-Dashboards,dashboards,hard
-Data Acquisition,dataacquisition,hard
-Data Engineering,dataengineering,hard
-Data Excellence,dataexcellence,hard
-Data Integrity,dataintegrity,hard
-Data Management,datamanagement,hard
-Data Mining,datamining,hard
-Data Query,dataquery,hard
-Data Structure,datastructure,hard
-Data Transformation,datatransform,hard
-Data Validation,datavalidation,hard
-Data Visualization,datavisualization,hard
-Data Warehouse,datawarehouse,hard
-Decision Making,decisionmaking,soft
-Deep Learning,deeplearning,hard
-Deployment,deployment,tool
-Desire to Learn,desiretolearnnewtechnology,soft
-Different Audiences,differentaudiences,soft
-Documentation,documentation,soft
-Edge Computing,edgecomputing,hard
-Entrepreneurial,entrepreneurial,soft
-Error Detection,errordetection,hard
-Exploratory Data Analysis,exploratorydataanalysis,hard
-Finding Patterns,findingpatterns,hard
-Forecasting,forecasting,hard
-Frameworks,framework,tool
-Full-Stack,fullstack,hard
-Genetics,genetics,hard
-Git,git,tool
-High Energy,highenergy,soft
-IBM,ibm,tool
-Identifying Error,identifyingerror,hard
-Influence Others,influenceothers,soft
-Innovative,innovative,soft
-Interpersonal,interpersonal,soft
-JAVA,java,tool
-Kafka,kafka,tool
-Language,language,tool
-Machine Learning,machinelearning,hard
-Maintaining Database,maintainingdatabase,hard
-Manipulate Data,manipulatedata,hard
-Microsoft Excel,excel,tool
-Microsoft Office Suite,microsoftofficesuite,tool
-Microsoft Power Point,powerpoint,tool
-Microsoft Word,microsoftword,tool
-Multi-Media,multimedia,hard
-Multiple Audiences,multipleaudiences,soft
-Neural Network,neuralnetwork,hard
-Operations Research,operationsresearch,hard
-Oracle Database,oracledatabase,hard
-Pandas,pandas,tool
-Personal Integrity,personalintegrity,soft
-Predict Behavior,predictbehavior,hard
-Predictive Modeling,predictivemodeling,hard
-Prepare Data,preparedata,hard
-Proactive,proactive,soft
-Problem Solving,problemsolving,soft
-Process Improvement,processimprovement,soft
-Product Management,productmanagement,soft
-Python,python,tool
-QA Testing,qatesting,hard
-Read Data,readdata,hard
-Regression Analysis,regressionanalysis,hard
-Regular Expression,regularexpression,hard
-Regulatory Environment,regulatoryenvironment,hard
-Relational Database,relationaldatabase,tool
-Report Development,reportdevelopment,hard
-Report Writing,reportwriting,hard
-Research,research,hard
-R Packages,rpackages,tool
-SAS,sas,tool
-scikit-learn,scikitlearn,tool
-Scripting,scripting,tool
-Search Engine,searchengine,tool
-Self-Starter,selfstarter,soft
-Software Deployment,softwaredeployment,hard
-Software Development,softwaredevelopment,hard
-Software Environments,softwareenvironments,tool
-SPSS,spss,tool
-SQL,sql,tool
-Supervised Learning,supervisedlearning,hard
-Tableau,tableau,tool
-Teamwork,teamwork,soft
-Tech Support,techsupport,soft
-TensorFlow,tensorflow,tool
-Decision Tree,trees,tool
-Trend Analysis,trendanalysis,hard
-Unsupervised Learning,unsupervisedlearning,hard
-Verbal Communication,verbalcommunication,soft
-Visualization,visualization,hard
-Write Code,writecode,hard
-Write Policies,writepolicies,hard
-Written Communication,writtencommunication,soft
+skill,skillname,type
+abtesting,A/B Testing,hard
+accountmanagement,Account Management,soft
+apache,Apache,tool
+architectures,Architectures,hard
+attentiontodetail,Attention to Detail,soft
+automation,Automation,hard
+azure,Azure,tool
+blockchain,Blockchain,hard
+businessanalytics,Business Analytics,hard
+businessdevelopment,Business Development,soft
+cloudcomputing,Cloud Computing,hard
+clustering,Clustering,hard
+collaboration,Collaboration,soft
+communication,Communication,soft
+consumermanagement,Consumer Management,soft
+consumerrelations,Consumer Relations,soft
+contentdevelopment,Content Development,hard
+contentpublishing,Content Publishing,hard
+contractmanagement,Contract Management,hard
+creative,Creative,soft
+criticalthinking,Critical Thinking,soft
+curious,Curious,soft
+customersupport,Customer Support,soft
+dashboards,Dashboards,hard
+dataacquisition,Data Acquisition,hard
+dataengineering,Data Engineering,hard
+dataexcellence,Data Excellence,hard
+dataintegrity,Data Integrity,hard
+datamanagement,Data Management,hard
+datamining,Data Mining,hard
+dataquery,Data Query,hard
+datastructure,Data Structure,hard
+datatransform,Data Transformation,hard
+datavalidation,Data Validation,hard
+datavisualization,Data Visualization,hard
+datawarehouse,Data Warehouse,hard
+decisionmaking,Decision Making,soft
+deeplearning,Deep Learning,hard
+deployment,Deployment,tool
+desiretolearnnewtechnology,Desire to Learn,soft
+differentaudiences,Different Audiences,soft
+documentation,Documentation,soft
+edgecomputing,Edge Computing,hard
+entrepreneurial,Entrepreneurial,soft
+errordetection,Error Detection,hard
+exploratorydataanalysis,Exploratory Data Analysis,hard
+findingpatterns,Finding Patterns,hard
+forecasting,Forecasting,hard
+framework,Frameworks,tool
+fullstack,Full-Stack,hard
+genetics,Genetics,hard
+git,Git,tool
+highenergy,High Energy,soft
+ibm,IBM,tool
+identifyingerror,Identifying Error,hard
+influenceothers,Influence Others,soft
+innovative,Innovative,soft
+interpersonal,Interpersonal,soft
+java,JAVA,tool
+kafka,Kafka,tool
+language,Language,tool
+machinelearning,Machine Learning,hard
+maintainingdatabase,Maintaining Database,hard
+manipulatedata,Manipulate Data,hard
+excel,Microsoft Excel,tool
+microsoftofficesuite,Microsoft Office Suite,tool
+powerpoint,Microsoft Power Point,tool
+microsoftword,Microsoft Word,tool
+multimedia,Multi-Media,hard
+multipleaudiences,Multiple Audiences,soft
+neuralnetwork,Neural Network,hard
+operationsresearch,Operations Research,hard
+oracledatabase,Oracle Database,hard
+pandas,Pandas,tool
+personalintegrity,Personal Integrity,soft
+predictbehavior,Predict Behavior,hard
+predictivemodeling,Predictive Modeling,hard
+preparedata,Prepare Data,hard
+proactive,Proactive,soft
+problemsolving,Problem Solving,soft
+processimprovement,Process Improvement,soft
+productmanagement,Product Management,soft
+python,Python,tool
+qatesting,QA Testing,hard
+readdata,Read Data,hard
+regressionanalysis,Regression Analysis,hard
+regularexpression,Regular Expression,hard
+regulatoryenvironment,Regulatory Environment,hard
+relationaldatabase,Relational Database,tool
+reportdevelopment,Report Development,hard
+reportwriting,Report Writing,hard
+research,Research,hard
+rpackages,R Packages,tool
+sas,SAS,tool
+scikitlearn,scikit-learn,tool
+scripting,Scripting,tool
+searchengine,Search Engine,tool
+selfstarter,Self-Starter,soft
+softwaredeployment,Software Deployment,hard
+softwaredevelopment,Software Development,hard
+softwareenvironments,Software Environments,tool
+spss,SPSS,tool
+sql,SQL,tool
+supervisedlearning,Supervised Learning,hard
+tableau,Tableau,tool
+teamwork,Teamwork,soft
+techsupport,Tech Support,soft
+tensorflow,TensorFlow,tool
+trees,Decision Tree,tool
+trendanalysis,Trend Analysis,hard
+unsupervisedlearning,Unsupervised Learning,hard
+verbalcommunication,Verbal Communication,soft
+visualization,Visualization,hard
+writecode,Write Code,hard
+writepolicies,Write Policies,hard
+writtencommunication,Written Communication,soft
