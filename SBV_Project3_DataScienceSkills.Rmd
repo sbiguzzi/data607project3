@@ -1,9 +1,16 @@
 ---
 title: "Project 3 - Data Science Skills"
-author: "Stefano Biguzzi"
+author: "Arora, Arushi; Biguzzi, Stefano; Costello, Ian; Fernandes, Peter; Tapke, Jordan"
 date: "10/7/2020"
-output: html_document
-editor_options: 
+output:
+  html_document:
+    includes:
+    highlight: pygments
+    theme: cerulean
+    toc: true
+    toc_float: true
+  pdf_document: default
+editor_options:
   chunk_output_type: console
 ---
 
@@ -11,6 +18,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, results = 'hide')
 ```
 
+# Loading Libraries
 ```{r}
 library(tidyverse)
 library(RCurl)
@@ -23,6 +31,7 @@ library(ngram)
 library(RMariaDB)
 ```
 
+# Creating the SQL Database
 ```{r}
 # #Create connection to database
 # con <- dbConnect(RMariaDB::MariaDB(),
@@ -32,62 +41,6 @@ library(RMariaDB)
 #                  host = '34.123.100.43')
 ```
 ```{r}
-# #Create tables in database
-# dbSendQuery(con, "
-#  CREATE TABLE IF NOT EXISTS datascienceskills.skills (
-#  skill_id INT NOT NULL AUTO_INCREMENT,
-#  skill CHAR(100),
-#  skillname CHAR(100),
-#  type CHAR(100),
-#  PRIMARY KEY (skill_id)
-#  );
-#  ")
-# 
-# dbSendQuery(con, "
-#  CREATE TABLE IF NOT EXISTS datascienceskills.jobs1 (
-#  job_id INT NOT NULL AUTO_INCREMENT,
-#  job_title CHAR(100),
-#  salary_estimate CHAR(100),
-#  job_description CHAR(100),
-#  rating INT,
-#  company_name CHAR(100),
-#  location CHAR(100),
-#  headquarters CHAR(100),
-#  size CHAR(100),
-#  PRIMARY KEY (job_id)
-#  );
-#  ")
-# 
-# dbSendQuery(con, "
-#  CREATE TABLE IF NOT EXISTS datascienceskills.jobs2 (
-#  job_id INT NOT NULL AUTO_INCREMENT,
-#  position CHAR(100),
-#  company CHAR(100),
-#  description CHAR(100),
-#  reviews INT,
-#  location CHAR(100),
-#  PRIMARY KEY (job_id)
-#  );
-#  ")
-# 
-# dbSendQuery(con, "
-#  CREATE TABLE IF NOT EXISTS datascienceskills.jobs3 (
-#  job_id INT NOT NULL AUTO_INCREMENT,
-#  time_stamp CHAR(100),
-#  url CHAR(100),
-#  job_title CHAR(100),
-#  category CHAR(100),
-#  company_name CHAR(100),
-#  city CHAR(100),
-#  state CHAR(100),
-#  country CHAR(100),
-#  inferred_city CHAR(100),
-#  inferred_state CHAR(100),
-#  PRIMARY KEY (job_id)
-#  );
-#  ")
-```
-```{r}
 # # data frames of skills and jobs
 # jobs1_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs1.csv"))
 # jobs2_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs2.csv"))
@@ -95,14 +48,15 @@ library(RMariaDB)
 # skills_df <- read.csv(url("https://raw.githubusercontent.com/sbiguzzi/data607project3/main/skill_word_count_v2.csv"))
 
 
-#Write to tables in database
+# Write to tables in database
 
-# dbWriteTable(con, name = "datascienceskills.jobs1", value = jobs1_df, append = TRUE)
-# dbWriteTable(con, name = "datascienceskills.jobs2", value = jobs2_df, append = TRUE)
-# dbWriteTable(con, name = "datascienceskills.jobs3", value = jobs3_df, append = TRUE)
-# dbWriteTable(con, name = "datascienceskills.skills", value = skills_df, append = TRUE)
+# dbWriteTable(con, name = "jobs1", value = jobs1_df, overwrite = TRUE)
+# dbWriteTable(con, name = "jobs2", value = jobs2_df, overwrite = TRUE)
+# dbWriteTable(con, name = "jobs3", value = jobs3_df, overwrite = TRUE)
+# dbWriteTable(con, name = "skills", value = skills_df, overwrite = TRUE)
 ```
 
+# Loading Data from SQL Database
 ```{r, results='hide',warning=FALSE}
 #Create connection to database
 con <- dbConnect(RMariaDB::MariaDB(),
@@ -130,6 +84,10 @@ DS.3 <- DS.3 %>%
   select(job_title,company_name,inferred_city,inferred_state,job_description,job_type,salary_offered,category)
 ```
 
+# Cleaning Data Frame {.tabset .tabset-fade}
+After loading the data we wanted to make the jobs data frames all have the same columns so we could combine them into on table. This way when we wanted to grab the skills from the job description it would only have to hit off of one table and not three.
+
+## Jobs data frame 1
 ```{r}
 #Modify DS.1 columns for appending
 names(DS.1) <- c("job_title","company_name","location","job_description","salary","sector")
@@ -153,6 +111,7 @@ DS.1$salary <-
 DS.1 <- DS.1 %>% select(-location)
 ```
 
+## Jobs data frame 2
 ```{r}
 #Rename DS.2 columns for appending
 names(DS.2) <- c("job_title","company_name","job_description","location")
@@ -169,6 +128,7 @@ DS.2$job_id <- paste0("DS.2_",1:nrow(DS.2)) #job id
 DS.2 <- DS.2 %>% select(-location)
 ```
 
+## Jobs data frame 3
 ```{r}
 #Rename DS.2 columns for appending
 names(DS.3) <- c("job_title","company_name","city","state","job_description","job_type","salary","sector")
@@ -180,6 +140,7 @@ DS.3$state <- setNames(state.abb, toupper(state.name))[toupper(DS.3$state)]
 DS.3$job_id <- paste0("DS.3_",1:nrow(DS.3))
 ```
 
+## Creating final jobs data frame
 ```{r}
 #Append data sets together into one large job description data frame
 final.DS.df <- rbind(rbind(DS.1,DS.2),DS.3)
@@ -197,6 +158,11 @@ for(i in names(final.DS.df)){
 rm(i)
 ```
 
+# Cleaning final jobs data frame
+
+The next step was to clean the `job_description` column to make it easier when matching the skills data frame to the final jobs data frame.
+
+## Creating function and using Regex
 ```{r}
 #Create function to clean up string
 clean.string <- function(x){
@@ -234,6 +200,11 @@ final.DS.df$job_description <-
   gsub("[ ]","",final.DS.df$job_description)
 ```
 
+# Creating the final skills data frame
+
+We wanted to create a simplified data frame with just the `job_id` and the `job_description` columns to use as the base data frame to search each skill word in. We then ran it through a loop were for each skill in the `skill` column of the skills data frame we searched for each row of the `job_description` column contained that string. The loop would then spit out the DS.skills data frame with `job_id`,`job_description`, and `skill` columns, where `skill` is a concatenated version of all the skills found. Finally, we transformed the final skills data frame to long format and added additional detail from `final.DS.df`.
+
+## Create simplified job data frame
 ```{r}
 #Create simplified dataset
 DS.skills <- final.DS.df[,c("job_id","job_description")]
@@ -242,7 +213,7 @@ DS.skills <- final.DS.df[,c("job_id","job_description")]
 DS.skills$skill <- NA
 ```
 
-
+## Match skills within job description
 ```{r}
 #Loop to populate skills column
 for (row in 1:nrow(DS.skills)){
@@ -259,6 +230,7 @@ for (row in 1:nrow(DS.skills)){
 rm(row,i)
 ```
 
+## Split the skill column from concatenated to long format
 ```{r}
 #Create final data frame with list of skills and job_id
 final.DS.skills <- filter(DS.skills,(!is.na(skill)))
@@ -283,15 +255,13 @@ final.DS.skills <- final.DS.skills %>%
 rm(col.length)
 ```
 
+## Add additional detail to the final skills data frame
 ```{r}
 #Add some additional job details job state and job salary
 final.DS.skills <- merge(final.DS.skills,final.DS.df[,c("job_id","salary","state")],by="job_id")
 
 #Add skill details type and skillname
 final.DS.skills <- merge(final.DS.skills,skills[,c("skill","type","skillname")],by="skill")
-
-# #Renaming state column so they are all abbreviations
-# final.DS.skills$state <- state.abb[grep(final.DS.skills$state, state.name)]
 
 #Replace blanks with NA
 final.DS.skills[final.DS.skills==""] <- NA
@@ -301,6 +271,11 @@ final.DS.skills <- final.DS.skills[order(final.DS.skills$job_id),]
 rownames(final.DS.skills) <- NULL
 ```
 
+# Analysis
+
+After getting the final data science skills data frame we created different tables for different counts. The first one was the top 20 skills that jobs posts are asking for as shown by how many jobs are asking for that skill. The second count was to see the top type of skills that jobs are asking for as seen by the number of jobs requesting the different type of skills.
+
+## Create the skill count table
 ```{r}
 #Create final data science skill count
 final.skill.count <- as.data.frame(final.DS.skills %>%
@@ -313,17 +288,9 @@ final.skill.count <- final.skill.count %>%
   mutate(pct_total = round(n/nrow(DS.skills),4))
 ```
 
+## Create the skill type count table
 ```{r}
-#Create final data science skill count
-final.state.count <- as.data.frame(filter(final.DS.skills,!(is.na(state))) %>%
-  group_by(state) %>%
-  count(type))%>%
-  group_by(state) %>%
-  mutate(pct_state = n/sum(n)) %>%
-  arrange(state,desc(pct_state))
-```
-
-```{r}
+#Get final counts of jobs vs type of skill
 final.type.count <- 
   as.data.frame(unique(final.DS.skills[,c("type","job_id")]) %>%
   group_by(type) %>%
@@ -332,7 +299,27 @@ final.type.count <-
   mutate(pct_jobs = round(n/nrow(DS.skills),4))
 ```
 
-```{r}
+# Results
+
+In the following graph we see that the most requested skill type is tool. This skill type is for skills like python, R, SQL. With 94.75% jobs asking for some type of programming tool to be accepted for the job. The second highest skill type was the hard skill set, which includes things like data mining, research, regression. 91.26% jobs asked that candidates are familiar with at least one type of hard skill. And the final skill type that jobs are asking for is the soft skill set, which include communication and collaboration. These types of skills were requested by 81.86% of job posts.
+```{r, echo=F, fig.show='asis'}
+ggplot(data=final.type.count, aes(x=reorder(type, -n), y=n, fill=type)) +
+  #allows for Y value to be variable instead of "count"
+    geom_bar(stat="identity")+
+  #color palette
+  scale_fill_brewer(palette="Paired")+
+  #changes labels of axis
+    xlab("Type of Skill") + ylab("# of jobs requesting skills") +
+  #creates title for graph
+    ggtitle("Most Requested Type of Skills")+
+  #removes legend
+    guides(fill=FALSE)+
+  #zooms in on data points to better see if there are differences
+    coord_cartesian(ylim = c(10000,20000))
+```
+
+Digging a little deeper we see that the most requested skill for all jobs, with 61.64% of jobs asking, is python. It is interesting to see that for 20,873 jobs, 5 of the top 10 skills are tools, 3 are hard skills and only 2 are soft skills.
+```{r, echo=F, fig.show='asis'}
 skills.plot <- final.skill.count[1:10,]
 ggplot(data=skills.plot, aes(x=reorder(skillname, -n), y=n, fill=skillname)) +
   #allows for Y value to be variable instead of "count"
@@ -351,18 +338,11 @@ ggplot(data=skills.plot, aes(x=reorder(skillname, -n), y=n, fill=skillname)) +
     coord_cartesian(ylim = c(3000,13000))
 ```
 
-```{r}
-ggplot(data=final.type.count, aes(x=reorder(type, -n), y=n, fill=type)) +
-  #allows for Y value to be variable instead of "count"
-    geom_bar(stat="identity")+
-  #color palette
-  scale_fill_brewer(palette="Paired")+
-  #changes labels of axis
-    xlab("Type of Skill") + ylab("# of jobs requesting skills") +
-  #creates title for graph
-    ggtitle("Most Requested Type of Skills")+
-  #removes legend
-    guides(fill=FALSE)+
-  #zooms in on data points to better see if there are differences
-    coord_cartesian(ylim = c(10000,20000))
-```
+# Conclusion
+
+Our findings suggest that the jobs are primarily asking for hard skills and tools and then soft skills. We would like to critique the suggestion that there is no need to focus on soft skills as much as focusing heavily on hard skills and tools because that can affect the communication of data with your audience. We believe this focus on hard skills and tools in the job descriptions is due to Data Science being an emerging field and so data scientists must be generalists. Just as in the early days of modern chemistry, chemists had to be decent lab technicians, so too much data scientist be equally proficient in coding as well as statistics.
+
+
+***
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
