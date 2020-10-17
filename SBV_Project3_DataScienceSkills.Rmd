@@ -24,85 +24,84 @@ library(RMariaDB)
 ```
 
 ```{r}
-#Create connection to database
-con <- dbConnect(RMariaDB::MariaDB(),
-                 dbname = 'datascienceskills',
-                 user = "group", 
-                 password = "datascience123", 
-                 host = '34.123.100.43')
+# #Create connection to database
+# con <- dbConnect(RMariaDB::MariaDB(),
+#                  dbname = 'datascienceskills',
+#                  user = "group", 
+#                  password = "datascience123", 
+#                  host = '34.123.100.43')
 ```
 ```{r}
-#Create tables in database
-dbSendQuery(con, "
- CREATE TABLE IF NOT EXISTS datascienceskills.skills (
- skill_id INT NOT NULL AUTO_INCREMENT,
- skill CHAR(100),
- type CHAR(100),
- count INT,
- PRIMARY KEY (skill_id)
- );
- ")
-
-dbSendQuery(con, "
- CREATE TABLE IF NOT EXISTS datascienceskills.jobs1 (
- job_id INT NOT NULL AUTO_INCREMENT,
- job_title CHAR(100),
- salary_estimate CHAR(100),
- job_description CHAR(100),
- rating INT,
- company_name CHAR(100),
- location CHAR(100),
- headquarters CHAR(100),
- size CHAR(100),
- PRIMARY KEY (job_id)
- );
- ")
-
-dbSendQuery(con, "
- CREATE TABLE IF NOT EXISTS datascienceskills.jobs2 (
- job_id INT NOT NULL AUTO_INCREMENT,
- position CHAR(100),
- company CHAR(100),
- description CHAR(100),
- reviews INT,
- location CHAR(100),
- PRIMARY KEY (job_id)
- );
- ")
-
-dbSendQuery(con, "
- CREATE TABLE IF NOT EXISTS datascienceskills.jobs3 (
- job_id INT NOT NULL AUTO_INCREMENT,
- time_stamp CHAR(100),
- url CHAR(100),
- job_title CHAR(100),
- category CHAR(100),
- company_name CHAR(100),
- city CHAR(100),
- state CHAR(100),
- country CHAR(100),
- inferred_city CHAR(100),
- inferred_state CHAR(100),
- PRIMARY KEY (job_id)
- );
- ")
+# #Create tables in database
+# dbSendQuery(con, "
+#  CREATE TABLE IF NOT EXISTS datascienceskills.skills (
+#  skill_id INT NOT NULL AUTO_INCREMENT,
+#  skill CHAR(100),
+#  skillname CHAR(100),
+#  type CHAR(100),
+#  PRIMARY KEY (skill_id)
+#  );
+#  ")
+# 
+# dbSendQuery(con, "
+#  CREATE TABLE IF NOT EXISTS datascienceskills.jobs1 (
+#  job_id INT NOT NULL AUTO_INCREMENT,
+#  job_title CHAR(100),
+#  salary_estimate CHAR(100),
+#  job_description CHAR(100),
+#  rating INT,
+#  company_name CHAR(100),
+#  location CHAR(100),
+#  headquarters CHAR(100),
+#  size CHAR(100),
+#  PRIMARY KEY (job_id)
+#  );
+#  ")
+# 
+# dbSendQuery(con, "
+#  CREATE TABLE IF NOT EXISTS datascienceskills.jobs2 (
+#  job_id INT NOT NULL AUTO_INCREMENT,
+#  position CHAR(100),
+#  company CHAR(100),
+#  description CHAR(100),
+#  reviews INT,
+#  location CHAR(100),
+#  PRIMARY KEY (job_id)
+#  );
+#  ")
+# 
+# dbSendQuery(con, "
+#  CREATE TABLE IF NOT EXISTS datascienceskills.jobs3 (
+#  job_id INT NOT NULL AUTO_INCREMENT,
+#  time_stamp CHAR(100),
+#  url CHAR(100),
+#  job_title CHAR(100),
+#  category CHAR(100),
+#  company_name CHAR(100),
+#  city CHAR(100),
+#  state CHAR(100),
+#  country CHAR(100),
+#  inferred_city CHAR(100),
+#  inferred_state CHAR(100),
+#  PRIMARY KEY (job_id)
+#  );
+#  ")
 ```
 ```{r}
 # # data frames of skills and jobs
 # jobs1_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs1.csv"))
 # jobs2_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs2.csv"))
 # jobs3_df <- read.csv(url("https://raw.githubusercontent.com/jtapke/School-Projects/master/Project%203/jobs3.csv"))
-skills_df <- read.csv(url("https://raw.githubusercontent.com/sbiguzzi/data607project3/main/skill_word_count_v2.csv"))
+# skills_df <- read.csv(url("https://raw.githubusercontent.com/sbiguzzi/data607project3/main/skill_word_count_v2.csv"))
 
 
 #Write to tables in database
 
-dbWriteTable(con, name = "datascienceskills.jobs1", value = jobs1_df, append = TRUE)
+# dbWriteTable(con, name = "datascienceskills.jobs1", value = jobs1_df, append = TRUE)
 # dbWriteTable(con, name = "datascienceskills.jobs2", value = jobs2_df, append = TRUE)
 # dbWriteTable(con, name = "datascienceskills.jobs3", value = jobs3_df, append = TRUE)
-dbWriteTable(con, name = "datascienceskills.skills", value = skills_df, append = TRUE)
+# dbWriteTable(con, name = "datascienceskills.skills", value = skills_df, append = TRUE)
 ```
-
 
 ```{r, results='hide',warning=FALSE}
 #Create connection to database
@@ -111,16 +110,20 @@ con <- dbConnect(RMariaDB::MariaDB(),
                  user = "group", 
                  password = "datascience123", 
                  host = '34.123.100.43')
+
 #Load skill list
 skills <- dbReadTable(conn = con, "skills")
+
 #Load data science job posts data set 1
 DS.1 <- dbReadTable(conn = con, "jobs1")
 DS.1 <- DS.1 %>%
   select("Job.Title","Company.Name","Location","Job.Description","Salary.Estimate","Sector")
+
 #Load data science job posts data set 2
 DS.2 <- dbReadTable(conn = con, "jobs2")
 DS.2 <- DS.2 %>%
   select(-reviews)
+
 #Load data science job posts dataset 3
 DS.3 <- dbReadTable(conn = con, "jobs3")
 DS.3 <- DS.3 %>%
@@ -130,10 +133,12 @@ DS.3 <- DS.3 %>%
 ```{r}
 #Modify DS.1 columns for appending
 names(DS.1) <- c("job_title","company_name","location","job_description","salary","sector")
+
 #Create necessary columns
 DS.1$city <- str_split(DS.1$location,", ",simplify = TRUE)[,1] #city
 DS.1$state <- str_split(DS.1$location,", ",simplify = TRUE)[,2] #state
-DS.1$company_name <- gsub("[\n].*","",DS.1$company_name)
+DS.1$state <- gsub("United Kingdom","UK",DS.1$state) #state abbr
+DS.1$company_name <- gsub("[\n].*","",DS.1$company_name) #company name
 DS.1$job_type <- NA #job type
 DS.1$job_id <- paste0("DS.1_",1:nrow(DS.1)) #job id
 DS.1$salary <- gsub("\\(([^\\)]+)\\)","",gsub(" ","",DS.1$salary)) #salary
@@ -143,6 +148,7 @@ DS.1$salary <-
   with(DS.1, replace(salary, salary == "$17-$27PerHour", "$35K-$56K"))
 DS.1$salary <-
   with(DS.1, replace(salary, salary == "$34-$53PerHour", "$70K-$110"))
+
 #Drop unused columns
 DS.1 <- DS.1 %>% select(-location)
 ```
@@ -150,13 +156,15 @@ DS.1 <- DS.1 %>% select(-location)
 ```{r}
 #Rename DS.2 columns for appending
 names(DS.2) <- c("job_title","company_name","job_description","location")
+
 #Create necessary columns
 DS.2$city <- str_split(DS.2$location,", ",simplify = TRUE)[,1] #city
-DS.2$state <- str_split(DS.2$location,", ",simplify = TRUE)[,2] #state
+DS.2$state <- gsub(".*,\\s([A-Z]{2}).*","\\1",DS.2$location)
 DS.2$job_type <- NA #job type
 DS.2$salary <- NA #salary
 DS.2$sector <- NA #sector
 DS.2$job_id <- paste0("DS.2_",1:nrow(DS.2)) #job id
+
 #Drop unused columns
 DS.2 <- DS.2 %>% select(-location)
 ```
@@ -164,15 +172,18 @@ DS.2 <- DS.2 %>% select(-location)
 ```{r}
 #Rename DS.2 columns for appending
 names(DS.3) <- c("job_title","company_name","city","state","job_description","job_type","salary","sector")
+
+#Change state names to abbr
+DS.3$state <- setNames(state.abb, toupper(state.name))[toupper(DS.3$state)]
+
 #Create necessary columns
 DS.3$job_id <- paste0("DS.3_",1:nrow(DS.3))
 ```
 
-
-
 ```{r}
 #Append data sets together into one large job description data frame
 final.DS.df <- rbind(rbind(DS.1,DS.2),DS.3)
+
 #Remove leading and trailing whitespaces
 for(i in names(final.DS.df)){
   final.DS.df[[i]] <- trimws(
@@ -181,6 +192,8 @@ for(i in names(final.DS.df)){
       whitespace = "[ \t\r\n]"
     )
 }
+
+#Remove R element after use
 rm(i)
 ```
 
@@ -198,75 +211,75 @@ clean.string <- function(x){
   x <-stripWhitespace(x)
   x <- removeNumbers(x)
   return(x)}
+
 #Replace job_description with cleaned version
 final.DS.df$job_description <-
   clean.string(final.DS.df$job_description)
-# Replace punctuation and non alphabet characters
+
+#Replace punctuation and non alphabet characters
 final.DS.df$job_description <- gsub("[[:punct:]]|[^[:alnum:]]"," ", final.DS.df$job_description)
+
 #Replace short words
 final.DS.df$job_description <- gsub("*\\b[[:alpha:]]{1,2}\\b *"," ", final.DS.df$job_description)
+
 #Replace any word that look like websites
 final.DS.df$job_description <- gsub("(f|ht)tp(s?)\\w+"," ", final.DS.df$job_description)
 final.DS.df$job_description <- gsub("(www)\\w+"," ", final.DS.df$job_description)
-# Trim white space again
+
+#Trim white space again
 final.DS.df$job_description <- trimws(final.DS.df$job_description,which='both',whitespace="[ ]")
-#Remove extra white space between words
+
+#Remove all white space between words
 final.DS.df$job_description <-
-  gsub("\\s+"," ",final.DS.df$job_description)
+  gsub("[ ]","",final.DS.df$job_description)
 ```
-
-```{r}
-#Create word count csv
-# skill.list <- final.DS.df %>%
-#   mutate(words = strsplit(as.character(job_description)," ")) %>%
-#   unnest(cols = c(words)) %>%
-#   count(words, sort = TRUE) %>%
-#   filter(n>10)
-# write.csv(skill.list,"./skill_word_count.csv", row.names = FALSE)
-```
-
 
 ```{r}
 #Create simplified dataset
 DS.skills <- final.DS.df[,c("job_id","job_description")]
 
 #Initiate Skills column in simplified dataset
-DS.skills$Skills <- NA
+DS.skills$skill <- NA
 ```
 
 
 ```{r}
-#Loop to populate skills column ~1.2min run time
+#Loop to populate skills column
 for (row in 1:nrow(DS.skills)){
   skill.list <- list()
   for (i in skills$skill){
     if (str_contains(DS.skills$job_description[row],i)){
       skill.list <- append(skill.list,i)
-      DS.skills$Skills[row] <- paste(skill.list,collapse = ", ")
+      DS.skills$skill[row] <- paste(skill.list,collapse = ", ")
     }
   }
 }
+
+#Remove R element after use
 rm(row,i)
 ```
 
 ```{r}
 #Create final data frame with list of skills and job_id
-final.DS.skills <- filter(DS.skills,(!is.na(Skills)))
-#split string on comma
-col.length <- max(sapply(strsplit(final.DS.skills$Skills, ", "),length)) #setting max columns
+final.DS.skills <- filter(DS.skills,(!is.na(skill)))
+
+#Split string on comma
+col.length <- max(sapply(strsplit(final.DS.skills$skill, ", "),length)) 
+
+#Setting max columns and creating one column per skill
 final.DS.skills <-
-  data.frame(cbind(final.DS.skills$job_id,str_split_fixed(final.DS.skills$Skills, ", ",n=col.length))) #one col per skill
-names(final.DS.skills) <- c("job_id",paste0("skill",1:col.length)) #renaming columns
-#Replace blanks with NA
-final.DS.skills[final.DS.skills==""] <- NA
+  data.frame(cbind(final.DS.skills$job_id,str_split_fixed(final.DS.skills$skill, ", ",n=col.length))) 
+
+#Renaming columns
+names(final.DS.skills) <- c("job_id",paste0("skill",1:col.length)) 
+
 #Converting data frame to long format
 final.DS.skills <- final.DS.skills %>% 
-  gather(SkillNum, Skill, skill1:paste0("skill",col.length)) %>% 
-  filter(!(is.na(Skill))) %>%
+  gather(SkillNum, skill, skill1:paste0("skill",col.length)) %>% 
+  filter(!(is.na(skill))) %>%
   select(-SkillNum)
-#Reordering data frame and resetting index
-final.DS.skills <- final.DS.skills[order(final.DS.skills$job_id),]
-rownames(final.DS.skills) <- NULL
+
+#Remove R element after use
 rm(col.length)
 ```
 
@@ -276,4 +289,46 @@ final.DS.skills <- merge(final.DS.skills,final.DS.df[,c("job_id","salary","state
 
 #Add skill details type and skillname
 final.DS.skills <- merge(final.DS.skills,skills[,c("skill","type","skillname")],by="skill")
+
+# #Renaming state column so they are all abbreviations
+# final.DS.skills$state <- state.abb[grep(final.DS.skills$state, state.name)]
+
+#Replace blanks with NA
+final.DS.skills[final.DS.skills==""] <- NA
+
+#Reordering data frame and resetting index
+final.DS.skills <- final.DS.skills[order(final.DS.skills$job_id),]
+rownames(final.DS.skills) <- NULL
 ```
+
+```{r}
+#Create final data science skill count
+final.skill.count <- as.data.frame(final.DS.skills %>%
+  group_by(skillname,type) %>%
+  tally(sort = TRUE) %>%
+  head(20))
+
+#Add percent of total jobs
+final.skill.count <- final.skill.count %>%
+  mutate(pct_total = round(n/nrow(DS.skills),4))
+```
+
+```{r}
+#Create final data science skill count
+final.state.count <- as.data.frame(filter(final.DS.skills,!(is.na(state))) %>%
+  group_by(state) %>%
+  count(type))%>%
+  group_by(state) %>%
+  mutate(pct_state = n/sum(n)) %>%
+  arrange(state,desc(pct_state))
+```
+
+```{r}
+final.type.count <- 
+  as.data.frame(unique(final.DS.skills[,c("type","job_id")]) %>%
+  group_by(type) %>%
+  tally(sort = TRUE) %>%
+  head(20)) %>%
+  mutate(pct_jobs = round(n/nrow(DS.skills),4))
+```
+
