@@ -332,3 +332,37 @@ final.type.count <-
   mutate(pct_jobs = round(n/nrow(DS.skills),4))
 ```
 
+```{r}
+skills.plot <- final.skill.count[1:10,]
+ggplot(data=skills.plot, aes(x=reorder(skillname, -n), y=n, fill=skillname)) +
+  #allows for Y value to be variable instead of "count"
+    geom_bar(stat="identity")+
+  #color palette
+  scale_fill_brewer(palette="Paired")+
+  #changes labels of axis
+    xlab("Skill") + ylab("# of times mentioned") +
+  #rotate x labels 90 degrees
+  theme(axis.text.x = element_text(angle = 90))+
+  #creates title for graph
+    ggtitle("Most Vaulable Data Science Skills")+
+  #removes legend
+    guides(fill=FALSE)+
+  #zooms in on data points to better see if there are differences
+    coord_cartesian(ylim = c(3000,13000))
+```
+
+```{r}
+ggplot(data=final.type.count, aes(x=reorder(type, -n), y=n, fill=type)) +
+  #allows for Y value to be variable instead of "count"
+    geom_bar(stat="identity")+
+  #color palette
+  scale_fill_brewer(palette="Paired")+
+  #changes labels of axis
+    xlab("Type of Skill") + ylab("# of times mentioned") +
+  #creates title for graph
+    ggtitle("Most Requested Type of Skills")+
+  #removes legend
+    guides(fill=FALSE)+
+  #zooms in on data points to better see if there are differences
+    coord_cartesian(ylim = c(10000,20000))
+```
