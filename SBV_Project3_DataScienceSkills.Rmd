@@ -340,7 +340,7 @@ ggplot(data=skills.plot, aes(x=reorder(skillname, -n), y=n, fill=skillname)) +
   #color palette
   scale_fill_brewer(palette="Paired")+
   #changes labels of axis
-    xlab("Skill") + ylab("# of times mentioned") +
+    xlab("Skill") + ylab("# of jobs requesting skills") +
   #rotate x labels 90 degrees
   theme(axis.text.x = element_text(angle = 90))+
   #creates title for graph
@@ -358,7 +358,7 @@ ggplot(data=final.type.count, aes(x=reorder(type, -n), y=n, fill=type)) +
   #color palette
   scale_fill_brewer(palette="Paired")+
   #changes labels of axis
-    xlab("Type of Skill") + ylab("# of times mentioned") +
+    xlab("Type of Skill") + ylab("# of jobs requesting skills") +
   #creates title for graph
     ggtitle("Most Requested Type of Skills")+
   #removes legend
