@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, results = 'hide')
 ```
 
 # Loading Libraries
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 library(RCurl)
 library(sjmisc)
@@ -36,8 +36,8 @@ library(RMariaDB)
 # #Create connection to database
 # con <- dbConnect(RMariaDB::MariaDB(),
 #                  dbname = 'datascienceskills',
-#                  user = "group", 
-#                  password = "datascience123", 
+#                  user = Sys.getenv("userid"), 
+#                  password = Sys.getenv("pwd"), 
 #                  host = '34.123.100.43')
 ```
 ```{r}
@@ -61,8 +61,8 @@ library(RMariaDB)
 #Create connection to database
 con <- dbConnect(RMariaDB::MariaDB(),
                  dbname = 'datascienceskills',
-                 user = "group", 
-                 password = "datascience123", 
+                 user = Sys.getenv("userid"),
+                 password = Sys.getenv("pwd"),
                  host = '34.123.100.43')
 
 #Load skill list
